@@ -1,12 +1,12 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from 'services/MovieAPI';
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
-  const location = useLocation();
-  const navigate = useNavigate();
+  //   const location = useLocation();
+  //   const navigate = useNavigate();
 
   useEffect(() => {
     if (!movieId) {
