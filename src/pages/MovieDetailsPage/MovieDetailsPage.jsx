@@ -1,12 +1,18 @@
-import { useParams } from 'react-router-dom';
+import {
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from 'services/MovieAPI';
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
-  //   const location = useLocation();
-  //   const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!movieId) {
@@ -15,11 +21,17 @@ const MovieDetailsPage = () => {
     api.getMovieDetails(movieId).then(data => setMovie(data));
   }, [movieId]);
 
+  const onGoBack = () => {
+    navigate(location.state?.from || '/');
+  };
+
   return (
     <div>
       {movie && (
         <>
-          <button>Go Back</button>
+          <button type="button" onClick={onGoBack}>
+            Go Back
+          </button>
           <div>
             <img
               width="300"
@@ -42,7 +54,14 @@ const MovieDetailsPage = () => {
           </div>
           <div>
             <h2>Additional Information</h2>
+            <NavLink to="cast" state={location.state}>
+              Cast
+            </NavLink>
+            <NavLink to="reviews" state={location.state}>
+              Reviews
+            </NavLink>
           </div>
+          <Outlet context={movieId} />
         </>
       )}
     </div>

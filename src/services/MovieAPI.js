@@ -13,7 +13,7 @@ async function getSearchMovies(query) {
   const response = await axios.get(
     `/search/movie?api_key=${API_KEY}&query=${query}`
   );
-  return response;
+  return response.data;
 }
 
 async function getMovieDetails(movie_id) {
@@ -25,14 +25,14 @@ async function getMovieCast(movie_id) {
   const response = await axios.get(
     `/movie/${movie_id}/credits?api_key=${API_KEY}`
   );
-  return response;
+  return response.data;
 }
 
 async function getMovieReviews(movie_id) {
   const response = await axios.get(
     `/movie/${movie_id}/reviews?api_key=${API_KEY}`
   );
-  return response;
+  return response.data;
 }
 
 const api = {

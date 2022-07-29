@@ -1,11 +1,37 @@
+import MoviesList from 'components/MoviesList/MoviesList';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import api from 'services/MovieAPI';
+
 const Movies = () => {
+  const [value, setValue] = useState('');
+  const [films, setFilms] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const query = searchParams.get('query');
+
+  useEffect(() => {
+    query && api.getSearchMovies(query).then(data => setFilms(data.results));
+  }, [query]);
+
+  const onHandleChange = event => {
+    setValue(event.target.value);
+  };
+
+  const onHandleSubmit = event => {
+    event.preventDefault();
+    setSearchParams({ query: value });
+    setValue('');
+  };
+
   return (
     <>
       <main>
-        <form>
-          <input />
-          <button>Search</button>
+        <form onSubmit={onHandleSubmit}>
+          <input type="text" onChange={onHandleChange} value={value} />
+          <button type="submit">Search</button>
         </form>
+        {films && <MoviesList films={films} />}
       </main>
     </>
   );
