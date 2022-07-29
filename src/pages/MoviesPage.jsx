@@ -2,6 +2,7 @@ import MoviesList from 'components/MoviesList/MoviesList';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import api from 'services/MovieAPI';
+import { toast } from 'react-toastify';
 
 const Movies = () => {
   const [value, setValue] = useState('');
@@ -11,7 +12,14 @@ const Movies = () => {
   const query = searchParams.get('query');
 
   useEffect(() => {
-    query && api.getSearchMovies(query).then(data => setFilms(data.results));
+    (async () => {
+      try {
+        query &&
+          api.getSearchMovies(query).then(data => setFilms(data.results));
+      } catch (error) {
+        toast.error(error.message);
+      }
+    })();
   }, [query]);
 
   const onHandleChange = event => {
