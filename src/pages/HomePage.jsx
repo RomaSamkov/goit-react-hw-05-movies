@@ -1,14 +1,21 @@
 import MoviesList from 'components/MoviesList/MoviesList';
 import { useState, useEffect } from 'react';
 import api from 'services/MovieAPI';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const [movies, setMovies] = useState(null);
 
   useEffect(() => {
-    api.getTrendingMovies().then(films => {
-      setMovies(films);
-    });
+    (async () => {
+      try {
+        api.getTrendingMovies().then(films => {
+          setMovies(films);
+        });
+      } catch (error) {
+        toast.error(error.message);
+      }
+    })();
   }, []);
 
   return (
