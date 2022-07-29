@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from 'services/MovieAPI';
+import { toast } from 'react-toastify';
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -18,7 +19,13 @@ const MovieDetailsPage = () => {
     if (!movieId) {
       return;
     }
-    api.getMovieDetails(movieId).then(data => setMovie(data));
+    (async () => {
+      try {
+        api.getMovieDetails(movieId).then(data => setMovie(data));
+      } catch (error) {
+        toast.error(error.message);
+      }
+    })();
   }, [movieId]);
 
   const onGoBack = () => {
