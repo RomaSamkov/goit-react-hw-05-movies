@@ -2,6 +2,7 @@ import MoviesList from 'components/MoviesList/MoviesList';
 import { useState, useEffect } from 'react';
 import api from 'services/MovieAPI';
 import { toast } from 'react-toastify';
+import { Container, Title } from './HomePage.styled';
 
 const Home = () => {
   const [movies, setMovies] = useState(null);
@@ -19,10 +20,10 @@ const Home = () => {
   }, []);
 
   return (
-    <main>
-      <h2>Trending Films</h2>
+    <Container>
+      <Title>Trending Films</Title>
       {movies && <MoviesList films={movies} />}
-    </main>
+    </Container>
   );
 };
 

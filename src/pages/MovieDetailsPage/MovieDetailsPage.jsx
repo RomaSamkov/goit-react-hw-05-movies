@@ -1,13 +1,15 @@
-import {
-  NavLink,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from 'services/MovieAPI';
 import { toast } from 'react-toastify';
+import {
+  AdditionalInformation,
+  ButtonGoBack,
+  FilmInfo,
+  MovieContainer,
+  MovieImg,
+  StyledLink,
+} from './MovieDetailsPage.styled';
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -36,38 +38,40 @@ const MovieDetailsPage = () => {
     <div>
       {movie && (
         <>
-          <button type="button" onClick={onGoBack}>
+          <ButtonGoBack type="button" onClick={onGoBack}>
             Go Back
-          </button>
-          <div>
-            <img
+          </ButtonGoBack>
+          <MovieContainer>
+            <MovieImg
               width="300"
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.original_title}
             />
-            <div>
+            <FilmInfo>
               <h2>
                 {`${movie.original_title} (${movie.release_date.slice(0, 4)})`}{' '}
               </h2>
-              <p>{`User score: ${movie.vote_average * 10}%`}</p>
+              <h3>User score</h3>
+              <p>{`${movie.vote_average * 10}%`}</p>
               <h3>Owerview:</h3>
               <p>{movie.overview}</p>
               <ul>
+                <h3>Genres:</h3>
                 {movie.genres.map(ganre => (
                   <li key={ganre.id}>{ganre.name}</li>
                 ))}
               </ul>
-            </div>
-          </div>
-          <div>
+            </FilmInfo>
+          </MovieContainer>
+          <AdditionalInformation>
             <h2>Additional Information</h2>
-            <NavLink to="cast" state={location.state}>
+            <StyledLink to="cast" state={location.state}>
               Cast
-            </NavLink>
-            <NavLink to="reviews" state={location.state}>
+            </StyledLink>
+            <StyledLink to="reviews" state={location.state}>
               Reviews
-            </NavLink>
-          </div>
+            </StyledLink>
+          </AdditionalInformation>
           <Outlet context={movieId} />
         </>
       )}

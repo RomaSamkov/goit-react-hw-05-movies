@@ -1,22 +1,17 @@
-import { NavLink } from 'react-router-dom';
-
-// const linkStyle = {
-//   base: { color: 'green' },
-//   active: { color: 'rgb(0, 0, 238)' },
-// };
+import { Container, Nav, StyledLink } from './Navigation.styled';
 
 const Navigation = () => {
   return (
-    <nav>
-      <ul>
+    <Nav>
+      <Container>
         <li>
-          <NavLink to="/">Home</NavLink>
+          <StyledLink to="/">Home</StyledLink>
         </li>
         <li>
-          <NavLink to="/Movies">Movies</NavLink>
+          <StyledLink to="/Movies">Movies</StyledLink>
         </li>
-      </ul>
-    </nav>
+      </Container>
+    </Nav>
   );
 };
 

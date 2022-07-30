@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import api from 'services/MovieAPI';
 import { toast } from 'react-toastify';
+import { Form, Input, SearchButton } from './MoviesPage.styled';
+import { FaSearch } from 'react-icons/fa';
 
 const Movies = () => {
   const [value, setValue] = useState('');
@@ -35,10 +37,17 @@ const Movies = () => {
   return (
     <>
       <main>
-        <form onSubmit={onHandleSubmit}>
-          <input type="text" onChange={onHandleChange} value={value} />
-          <button type="submit">Search</button>
-        </form>
+        <Form onSubmit={onHandleSubmit}>
+          <Input
+            type="text"
+            placeholder="Enter film name..."
+            onChange={onHandleChange}
+            value={value}
+          />
+          <SearchButton type="submit">
+            <FaSearch size={30}></FaSearch>Search
+          </SearchButton>
+        </Form>
         {films && <MoviesList films={films} />}
       </main>
     </>
